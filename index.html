@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="/assets/style/style.css" />
+        <script src="/index.js" defer></script>
+        <title>Trello App Clone</title>
+    </head>
+    <body>
+        <main class="todo-container">
+            <div class="column">
+                <h1>Backlog</h1>
+                <div class="addTask">
+                    <input type="text" class="task_input" />
+                    <button id="bck_btn" class="add_task">Add</button>
+                </div>
+                <div class="task_container" id="backlog"></div>
+            </div>
+            <div class="column">
+                <h1>In Progress</h1>
+                <div class="addTask">
+                    <input type="text" class="task_input" />
+                    <button id="inpr_btn" class="add_task">Add</button>
+                </div>
+                <div class="task_container" id="inprogress"></div>
+            </div>
+            <div class="column">
+                <h1>Complete</h1>
+                <div class="addTask">
+                    <input type="text" class="task_input" />
+                    <button id="comp_btn" class="add_task">Add</button>
+                </div>
+                <div class="task_container" id="complete"></div>
+            </div>
+            <div class="column">
+                <h1>On Hold</h1>
+                <div class="addTask">
+                    <input type="text" class="task_input" />
+                    <button id="onh_btn" class="add_task">Add</button>
+                </div>
+                <div class="task_container" id="onhold"></div>
+            </div>
+        </main>
+    </body>
+</html>

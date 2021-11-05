@@ -1,0 +1,33 @@
+@use '_variables' as *;
+
+.task {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    background-color: $white;
+    box-shadow: $boxShadow;
+    border-radius: 4px;
+    padding: 0.5rem 0.5rem;
+    font-size: 1.5rem;
+    margin: 0.5rem 0;
+    font-size: 20px;
+    height: 15%;
+
+    .close {
+        position: absolute;
+        right: 0.5rem;
+        top: 0rem;
+        font-size: 2rem;
+        color: $grey;
+        cursor: pointer;
+        &:hover {
+            color: $hoverGrey;
+        }
+    }
+}
+
+.dragging {
+    opacity: 0.5;
+    transform: scale(0.8);
+}

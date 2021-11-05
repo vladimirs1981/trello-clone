@@ -1,0 +1,62 @@
+@use '_variables' as *;
+
+html {
+    box-sizing: border-box;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: inherit;
+    &::before {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+    &::after {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+}
+
+body {
+    font-family: $primaryFont;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+// body {
+//     background-color: darkslategrey;
+//     font-size: 18px;
+//     font-family: $primaryFont;
+
+//     #addNewList {
+//         margin-left: 20px;
+//         margin-top: 40px;
+
+//         input {
+//             border-radius: 8px;
+//             border: none;
+//             outline: none;
+//             height: 27px;
+//         }
+
+//         button {
+//             border-radius: 8px;
+//             padding: 4px;
+//             font-family: $primaryFont;
+//             font-weight: 600;
+//             outline: none;
+//             border: none;
+//             cursor: pointer;
+//         }
+//     }
+
+//     main {
+//         min-width: 1200px;
+//         margin: 15px;
+//     }
+// }

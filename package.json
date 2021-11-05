@@ -1,0 +1,26 @@
+{
+  "name": "trello-clone",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write \"**/*.{js,scss}\"",
+    "lint": "eslint \"**/*.{js,jsx}\" --quiet"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vladimirs1981/trello-clone.git"
+  },
+  "author": "Vladimir Stojanovic",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vladimirs1981/trello-clone/issues"
+  },
+  "homepage": "https://github.com/vladimirs1981/trello-clone#readme",
+  "devDependencies": {
+    "eslint": "^8.1.0",
+    "eslint-config-prettier": "^8.3.0",
+    "prettier": "^2.4.1"
+  }
+}
