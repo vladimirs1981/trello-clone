@@ -1,18 +1,26 @@
 let backlog_tasks, inprogress_tasks, complete_tasks, onhold_tasks;
 
-backlog_tasks = document.getElementById('backlog');
-inprogress_tasks = document.getElementById('inprogress');
-complete_tasks = document.getElementById('complete');
-onhold_tasks = document.getElementById('onhold');
+window.onload = function () {
+    backlog_tasks = document.getElementById('backlog');
+    inprogress_tasks = document.getElementById('inprogress');
+    complete_tasks = document.getElementById('complete');
+    onhold_tasks = document.getElementById('onhold');
 
-//getTasksFromLocalStorage();
+    getTasksFromLocalStorage();
+    console.log(inprogress_tasks.innerHTML);
+    var existing_tasks = document.getElementsByClassName('task');
 
-var existing_tasks = document.getElementsByClassName('task');
+    const close_btns = document.querySelectorAll('.close');
 
-for (let index = 0; index < existing_tasks.length; index++) {
-    existing_tasks[index].addEventListener('dragstart', dragStart, false);
-    existing_tasks[index].addEventListener('dragend', dragEnd, false);
-}
+    close_btns.forEach((btn) => {
+        btn.addEventListener('click', deleteTask);
+    });
+
+    for (let index = 0; index < existing_tasks.length; index++) {
+        existing_tasks[index].addEventListener('dragstart', dragStart, false);
+        existing_tasks[index].addEventListener('dragend', dragEnd, false);
+    }
+};
 
 const columns = document.querySelectorAll('.task_container');
 
@@ -33,7 +41,16 @@ columns.forEach((column) => {
 
     column.addEventListener('dragenter', dragEnter);
     column.addEventListener('dragleave', dragLeave);
-    column.addEventListener('drop', dragDrop);
+    column.addEventListener('drop', (e) => {
+        e.preventDefault();
+        // let draggingTask = document.querySelector('.dragging');
+        // e.target.appendChild(draggingTask);
+        e.target.style.border = 'none';
+
+        deployTasktoLocalStorage();
+        console.log(inprogress_tasks.innerHTML);
+        console.log(e.target);
+    });
 });
 
 // existing_tasks.forEach((task) => {
@@ -54,6 +71,8 @@ for (let i = 0; i < addTaskBtns.length; i++) {
             task_div.appendChild(txt);
             task_div.classList.add('task');
             task_div.setAttribute('draggable', 'true');
+            task_div.addEventListener('dragstart', dragStart, false);
+            task_div.addEventListener('dragend', dragEnd, false);
             const span = document.createElement('span');
             const span_txt = document.createTextNode('\u00D7');
             span.classList.add('close');
@@ -64,12 +83,15 @@ for (let i = 0; i < addTaskBtns.length; i++) {
             columns[i].appendChild(task_div);
 
             span.addEventListener('click', () => {
-                span.parentElement.style.display = 'none';
+                document
+                    .getElementById(task_div.parentNode.id)
+                    .removeChild(task_div);
+                deployTasktoLocalStorage();
             });
 
             task_div.addEventListener('dragstart', dragStart);
             task_div.addEventListener('dragend', dragEnd);
-            // deployTasktoLocalStorage();
+            deployTasktoLocalStorage();
             taskInput[i].value = '';
         }
     });
@@ -90,10 +112,9 @@ function getTasksFromLocalStorage() {
 }
 
 function dragStart() {
-    setTimeout(() => {
-        this.style.display = 'none';
-    }, 0);
-
+    // setTimeout(() => {
+    //     this.style.display = 'none';
+    // }, 0);
     this.classList.add('dragging');
 }
 
@@ -101,7 +122,6 @@ function dragEnd() {
     setTimeout(() => {
         this.style.display = 'block';
     }, 0);
-
     this.classList.remove('dragging');
 }
 
@@ -113,20 +133,18 @@ function dragLeave() {
     this.style.border = 'none';
 }
 
-function dragDrop() {
-    let draggingTask = document.querySelector('.dragging');
-    this.style.border = 'none';
-    this.appendChild(draggingTask);
+function dragDrop(e) {
+    e.preventDefault();
+    e.target.style.border = 'none';
+    console.log(this);
+    deployTasktoLocalStorage();
 }
 
-const close_btns = document.querySelectorAll('.close');
-
-close_btns.forEach((btn) => {
-    btn.addEventListener('click', () => {
-        btn.parentElement.style.display = 'none';
-        //    deployTasktoLocalStorage();
-    });
-});
+function deleteTask() {
+    let task = this.parentNode;
+    document.getElementById(task.parentNode.id).removeChild(task);
+    deployTasktoLocalStorage();
+}
 
 function getCardAfterDraggingCard(column, yDraggingCard) {
     let columnTasks = [...column.querySelectorAll('.task:not(.dragging)')];
