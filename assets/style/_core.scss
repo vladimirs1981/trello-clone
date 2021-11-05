@@ -1,0 +1,29 @@
+@use '_variables' as *;
+
+html {
+    box-sizing: border-box;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: inherit;
+    &::before {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+    &::after {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+}
+
+body {
+    font-family: $primaryFont;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
