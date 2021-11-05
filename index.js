@@ -7,19 +7,19 @@ window.onload = function () {
     onhold_tasks = document.getElementById('onhold');
 
     getTasksFromLocalStorage();
-    console.log(inprogress_tasks.innerHTML);
+
     var existing_tasks = document.getElementsByClassName('task');
+
+    for (let index = 0; index < existing_tasks.length; index++) {
+        existing_tasks[index].addEventListener('dragstart', dragStart, false);
+        existing_tasks[index].addEventListener('dragend', dragEnd, false);
+    }
 
     const close_btns = document.querySelectorAll('.close');
 
     close_btns.forEach((btn) => {
         btn.addEventListener('click', deleteTask);
     });
-
-    for (let index = 0; index < existing_tasks.length; index++) {
-        existing_tasks[index].addEventListener('dragstart', dragStart, false);
-        existing_tasks[index].addEventListener('dragend', dragEnd, false);
-    }
 };
 
 const columns = document.querySelectorAll('.task_container');
@@ -43,8 +43,6 @@ columns.forEach((column) => {
     column.addEventListener('dragleave', dragLeave);
     column.addEventListener('drop', (e) => {
         e.preventDefault();
-        // let draggingTask = document.querySelector('.dragging');
-        // e.target.appendChild(draggingTask);
         e.target.style.border = 'none';
 
         deployTasktoLocalStorage();
@@ -53,15 +51,22 @@ columns.forEach((column) => {
     });
 });
 
-// existing_tasks.forEach((task) => {
-//     task.addEventListener('dragstart', dragStart);
-//     task.addEventListener('dragend', dragEnd);
-// });
-
 const addTaskBtns = document.querySelectorAll('.add_task');
 const taskInput = document.querySelectorAll('.task_input');
 
 for (let i = 0; i < addTaskBtns.length; i++) {
+    //add task on key "Enter"
+    for (let index = 0; index < taskInput.length; index++) {
+        taskInput[i].addEventListener('keyup', (e) => {
+            if (taskInput[i].value != '') {
+                if (e.keyCode === 13) {
+                    e.preventDefault();
+                    addTaskBtns[i].click();
+                }
+            }
+        });
+    }
+    //add new task
     addTaskBtns[i].addEventListener('click', () => {
         if (taskInput[i].value != '') {
             const task_div = document.createElement('div');
@@ -89,8 +94,8 @@ for (let i = 0; i < addTaskBtns.length; i++) {
                 deployTasktoLocalStorage();
             });
 
-            task_div.addEventListener('dragstart', dragStart);
-            task_div.addEventListener('dragend', dragEnd);
+            task_div.addEventListener('dragstart', dragStart, false);
+            task_div.addEventListener('dragend', dragEnd, false);
             deployTasktoLocalStorage();
             taskInput[i].value = '';
         }
@@ -112,17 +117,17 @@ function getTasksFromLocalStorage() {
 }
 
 function dragStart() {
-    // setTimeout(() => {
-    //     this.style.display = 'none';
-    // }, 0);
+    setTimeout(() => {
+        this.style.display = 'none';
+    }, 0);
+
     this.classList.add('dragging');
 }
 
 function dragEnd() {
-    setTimeout(() => {
-        this.style.display = 'block';
-    }, 0);
+    this.style.display = 'flex';
     this.classList.remove('dragging');
+    deployTasktoLocalStorage();
 }
 
 function dragEnter() {
@@ -136,7 +141,6 @@ function dragLeave() {
 function dragDrop(e) {
     e.preventDefault();
     e.target.style.border = 'none';
-    console.log(this);
     deployTasktoLocalStorage();
 }
 
